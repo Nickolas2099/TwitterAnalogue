@@ -1,14 +1,12 @@
 package com.example.twitterAnalog.controller;
 
+import com.example.twitterAnalog.domen.api.RegistrationReq;
 import com.example.twitterAnalog.domen.response.Response;
 import com.example.twitterAnalog.service.impl.PhraseServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -25,13 +23,19 @@ public class Controller {
         return hello;
     }
 
-
-
-    @PostMapping("/test")
-    public ResponseEntity<Response> test() {
-        log.info("START endpoint test");
-        ResponseEntity<Response> response = phraseService.test();
-        log.info("END endpoint test, response: {}", response);
-        return response;
+    @PostMapping("/registration")
+    public ResponseEntity<Response> registration(@RequestBody final RegistrationReq req) {
+        log.info("START endpoint registration, request: {}", req);
+        ResponseEntity<Response> resp = phraseService.registration(req);
+        log.info("End endpoint registration, response: {}", resp);
+        return resp;
     }
+
+//    @PostMapping("/test")
+//    public ResponseEntity<Response> test() {
+//        log.info("START endpoint test");
+//        ResponseEntity<Response> response = phraseService.test();
+//        log.info("END endpoint test, response: {}", response);
+//        return response;
+//    }
 }
