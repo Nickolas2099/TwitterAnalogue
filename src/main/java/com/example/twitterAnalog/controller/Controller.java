@@ -20,12 +20,14 @@ public class Controller {
 
     @GetMapping("/hello")
     public String hello() {
-        String hello = "Hello, phrase-service! Version: 1.0.0";
+        String hello = "Hello, phrase-service! Version: 1.0.1";
         log.info(hello);
         return hello;
     }
 
-    @PostMapping
+
+
+    @PostMapping("/test")
     public ResponseEntity<Response> test() {
         log.info("START endpoint test");
         ResponseEntity<Response> response = phraseService.test();
