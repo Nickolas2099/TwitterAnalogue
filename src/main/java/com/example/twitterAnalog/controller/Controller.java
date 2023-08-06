@@ -5,13 +5,14 @@ import com.example.twitterAnalog.domen.response.Response;
 import com.example.twitterAnalog.service.impl.PhraseServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("phrase-service-public")
+@RequestMapping(value = "phrase-service-public")
 public class Controller {
 
     private final PhraseServiceImpl phraseService;
@@ -31,11 +32,4 @@ public class Controller {
         return resp;
     }
 
-//    @PostMapping("/test")
-//    public ResponseEntity<Response> test() {
-//        log.info("START endpoint test");
-//        ResponseEntity<Response> response = phraseService.test();
-//        log.info("END endpoint test, response: {}", response);
-//        return response;
-//    }
 }
