@@ -1,6 +1,6 @@
-package com.example.twitterAnalog.domen.api;
+package com.example.twitterAnalog.domain.api;
 
-
+import com.example.twitterAnalog.domain.constant.RegExp;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -8,17 +8,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegistrationReq {
+public class Authorization {
+
     @NotBlank(message = "nickname должен быть заполнен")
-    @Pattern(regexp = "^[a-zA-Z0-9а-яА-Я. _-]{4,15}$", message = "Некорректный nickname")
+    @Pattern(regexp = RegExp.nickname, message = "Некорректный nickname")
     private String nickname;
 
     @NotBlank(message = "password должен быть заполнен")
-    @Pattern(regexp = "^[a-zA-Z0-9а-яА-Я.,:; _?!+=/'\\\\\"*(){}//[//]//-]{8,100}$", message = "Некорректный password")
+    @Pattern(regexp = RegExp.password, message = "Некорректный password")
+
     private String password;
 }

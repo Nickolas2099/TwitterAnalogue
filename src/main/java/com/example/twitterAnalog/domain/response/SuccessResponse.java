@@ -1,4 +1,4 @@
-package com.example.twitterAnalog.domen.response;
+package com.example.twitterAnalog.domain.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

@@ -1,8 +1,8 @@
-package com.example.twitterAnalog.domen.response.exception;
+package com.example.twitterAnalog.domain.response.exception;
 
-import com.example.twitterAnalog.domen.constant.Code;
-import com.example.twitterAnalog.domen.response.error.Error;
-import com.example.twitterAnalog.domen.response.error.ErrorResponse;
+import com.example.twitterAnalog.domain.constant.Code;
+import com.example.twitterAnalog.domain.response.error.Error;
+import com.example.twitterAnalog.domain.response.error.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

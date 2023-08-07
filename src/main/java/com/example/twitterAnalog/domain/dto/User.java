@@ -1,14 +1,17 @@
-package com.example.twitterAnalog.domen.api;
+package com.example.twitterAnalog.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Builder
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegistrationResp {
+public class User {
+
+    private String nickname;
+    private String encryptPassword;
     private String accessToken;
 }

@@ -1,6 +1,6 @@
-package com.example.twitterAnalog.domen.response.error;
+package com.example.twitterAnalog.domain.response.error;
 
-import com.example.twitterAnalog.domen.constant.Code;
+import com.example.twitterAnalog.domain.constant.Code;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;

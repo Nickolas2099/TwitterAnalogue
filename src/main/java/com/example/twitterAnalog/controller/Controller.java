@@ -1,11 +1,10 @@
 package com.example.twitterAnalog.controller;
 
-import com.example.twitterAnalog.domen.api.RegistrationReq;
-import com.example.twitterAnalog.domen.response.Response;
+import com.example.twitterAnalog.domain.api.RegistrationReq;
+import com.example.twitterAnalog.domain.response.Response;
 import com.example.twitterAnalog.service.impl.PhraseServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
