@@ -1,12 +1,10 @@
 package com.example.twitterAnalog.service.impl;
 
 import com.example.twitterAnalog.dao.Dao;
-import com.example.twitterAnalog.domain.api.LoginReq;
-import com.example.twitterAnalog.domain.api.LoginResp;
-import com.example.twitterAnalog.domain.api.RegistrationReq;
-import com.example.twitterAnalog.domain.api.RegistrationResp;
+import com.example.twitterAnalog.domain.api.*;
 import com.example.twitterAnalog.domain.constant.Code;
 import com.example.twitterAnalog.domain.dto.User;
+import com.example.twitterAnalog.domain.entity.Phrase;
 import com.example.twitterAnalog.domain.response.SuccessResponse;
 import com.example.twitterAnalog.domain.response.Response;
 import com.example.twitterAnalog.domain.response.exception.CommonException;
@@ -18,7 +16,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -59,4 +61,37 @@ public class PhraseServiceImpl implements PhraseService {
     }
 
 
+    public ResponseEntity<Response> publicPhrase(@RequestHeader PublicPhraseReq req, @RequestBody String accessToken) {
+        validationUtils.validationRequest(req);
+
+        long userId = dao.getUserIdByToken(accessToken);
+        long phraseId = dao.addPhrase(userId, req.getText());
+        log.info("userId: {}, phraseId: {}", userId, phraseId);
+
+        for(String tag : req.getTags()) {
+            dao.addTag(tag);
+            dao.addPhraseTag(phraseId, tag);
+        }
+
+        return new ResponseEntity<>(SuccessResponse.builder().build(), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Response> getPhrases(String accessToken) {
+        long userId = dao.getUserIdByToken(accessToken);
+        List<Phrase> phraseList = dao.getPhrasesByUserId(userId);
+
+        List<PhraseResp> phraseRespList = new ArrayList<>();
+        for (Phrase phrase : phraseList) {
+            List<String> tags = dao.getTagsByPhraseId(phrase.getId());
+            phraseRespList.add(PhraseResp.builder()
+                    .id(phrase.getId())
+                    .text(phrase.getText())
+                    .timeInsert(phrase.getTimeInsert())
+                    .tags(tags).build());
+        }
+
+        return new ResponseEntity<>(SuccessResponse.builder().data(GetMyPhrasesResp.builder().phrases(phraseRespList)
+                .build()).build(), HttpStatus.OK);
+    }
 }

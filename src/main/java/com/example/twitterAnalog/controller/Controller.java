@@ -1,5 +1,7 @@
 package com.example.twitterAnalog.controller;
 
+import com.example.twitterAnalog.domain.api.LoginReq;
+import com.example.twitterAnalog.domain.api.PublicPhraseReq;
 import com.example.twitterAnalog.domain.api.RegistrationReq;
 import com.example.twitterAnalog.domain.response.Response;
 import com.example.twitterAnalog.service.impl.PhraseServiceImpl;
@@ -31,4 +33,29 @@ public class Controller {
         return resp;
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<Response> login(@RequestBody final LoginReq req) {
+        log.info("START endpoint login, request: {}", req);
+        ResponseEntity<Response> resp = phraseService.login(req);
+        log.info("End endpoint login, response: {}", resp);
+        return resp;
+    }
+
+    @PostMapping("/publicPhrase")
+    public ResponseEntity<Response> publicPhrase(@RequestHeader final String accessToken, @RequestBody final PublicPhraseReq req) {
+
+        log.info("START endpoint publicPhrase, request: {}", req);
+        ResponseEntity<Response> resp = phraseService.publicPhrase(req, accessToken);
+        log.info("End endpoint publicPhrase, response: {}", resp);
+        return resp;
+    }
+
+    @GetMapping("/getPhrases")
+    public ResponseEntity<Response> getPhrases(@RequestHeader final String accessToken){
+
+        log.info("START endpoint getPhrases, accessToken: {}", accessToken);
+        ResponseEntity<Response> resp = phraseService.getPhrases(accessToken);
+        log.info("END endpoint getPhrases, accessToken: {}", accessToken);
+        return resp;
+    }
 }
