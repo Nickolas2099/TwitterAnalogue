@@ -1,6 +1,6 @@
 package com.example.twitterAnalog.dao.impl;
 
-import com.example.twitterAnalog.dao.Dao;
+import com.example.twitterAnalog.dao.UserDao;
 import com.example.twitterAnalog.domain.constant.Code;
 import com.example.twitterAnalog.domain.dto.User;
 import com.example.twitterAnalog.domain.entity.Phrase;
@@ -22,7 +22,7 @@ import java.util.List;
 @Slf4j
 @Repository
 @Transactional
-public class DaoImpl extends JdbcDaoSupport implements Dao {
+public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
 
     @Autowired
     private DataSource dataSource;

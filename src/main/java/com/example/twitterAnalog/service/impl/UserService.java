@@ -1,6 +1,6 @@
 package com.example.twitterAnalog.service.impl;
 
-import com.example.twitterAnalog.dao.Dao;
+import com.example.twitterAnalog.dao.UserDao;
 import com.example.twitterAnalog.domain.api.*;
 import com.example.twitterAnalog.domain.constant.Code;
 import com.example.twitterAnalog.domain.dto.User;
@@ -26,24 +26,24 @@ import java.util.UUID;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class PhraseServiceImpl implements PhraseService {
+public class UserService implements PhraseService {
 
     private final ValidationUtils validationUtils;
-    private final Dao dao;
+    private final UserDao userDao;
     private final EncryptUtils encryptUtils;
 
     @Override
     public ResponseEntity<Response> registration(RegistrationReq req) {
         validationUtils.validationRequest(req);
 
-        if(dao.isExistsNickname(req.getAuthorization().getNickname())) {
+        if(userDao.isExistsNickname(req.getAuthorization().getNickname())) {
             throw CommonException.builder().code(Code.NICKNAME_BUSY).message("Этот ник уже занят, придумайте другой")
                     .httpStatus(HttpStatus.BAD_REQUEST).build();
         }
 
         String accessToken = UUID.randomUUID().toString().replace("-", "") + System.currentTimeMillis();
         String encryptPassword = encryptUtils.encryptPassword(req.getAuthorization().getPassword());
-        dao.insertNewUser(User.builder().nickname(req.getAuthorization().getNickname()).encryptPassword(encryptPassword)
+        userDao.insertNewUser(User.builder().nickname(req.getAuthorization().getNickname()).encryptPassword(encryptPassword)
                 .accessToken(accessToken).build());
         return new ResponseEntity<>(SuccessResponse.builder().data(RegistrationResp.builder()
                 .accessToken(accessToken).build()).build(), HttpStatus.OK);
@@ -54,7 +54,7 @@ public class PhraseServiceImpl implements PhraseService {
         validationUtils.validationRequest(req);
 
         String encryptPassword = encryptUtils.encryptPassword(req.getAuthorization().getPassword());
-        String accessToken = dao.getAccessToken(User.builder().nickname(req.getAuthorization().getNickname())
+        String accessToken = userDao.getAccessToken(User.builder().nickname(req.getAuthorization().getNickname())
                 .encryptPassword(encryptPassword).build());
         return new ResponseEntity<>(SuccessResponse.builder().data(LoginResp.builder().accessToken(accessToken)
                 .build()).build(), HttpStatus.OK);
@@ -64,13 +64,13 @@ public class PhraseServiceImpl implements PhraseService {
     public ResponseEntity<Response> publicPhrase(@RequestHeader PublicPhraseReq req, @RequestBody String accessToken) {
         validationUtils.validationRequest(req);
 
-        long userId = dao.getUserIdByToken(accessToken);
-        long phraseId = dao.addPhrase(userId, req.getText());
+        long userId = userDao.getUserIdByToken(accessToken);
+        long phraseId = userDao.addPhrase(userId, req.getText());
         log.info("userId: {}, phraseId: {}", userId, phraseId);
 
         for(String tag : req.getTags()) {
-            dao.addTag(tag);
-            dao.addPhraseTag(phraseId, tag);
+            userDao.addTag(tag);
+            userDao.addPhraseTag(phraseId, tag);
         }
 
         return new ResponseEntity<>(SuccessResponse.builder().build(), HttpStatus.OK);
@@ -78,12 +78,12 @@ public class PhraseServiceImpl implements PhraseService {
 
     @Override
     public ResponseEntity<Response> getPhrases(String accessToken) {
-        long userId = dao.getUserIdByToken(accessToken);
-        List<Phrase> phraseList = dao.getPhrasesByUserId(userId);
+        long userId = userDao.getUserIdByToken(accessToken);
+        List<Phrase> phraseList = userDao.getPhrasesByUserId(userId);
 
         List<PhraseResp> phraseRespList = new ArrayList<>();
         for (Phrase phrase : phraseList) {
-            List<String> tags = dao.getTagsByPhraseId(phrase.getId());
+            List<String> tags = userDao.getTagsByPhraseId(phrase.getId());
             phraseRespList.add(PhraseResp.builder()
                     .id(phrase.getId())
                     .text(phrase.getText())
