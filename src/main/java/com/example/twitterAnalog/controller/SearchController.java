@@ -1,9 +1,13 @@
 package com.example.twitterAnalog.controller;
 
+import com.example.twitterAnalog.domain.api.search.SearchPhrasesByTagReq;
+import com.example.twitterAnalog.domain.api.search.SearchTagReq;
+import com.example.twitterAnalog.domain.response.Response;
+import com.example.twitterAnalog.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -11,6 +15,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "phrase-service-public/search")
 public class SearchController {
 
+    private final SearchService searchService;
 
+    @PostMapping("/searchPhrasesByTag")
+    public ResponseEntity<Response> searchPhrasesbyTag(@RequestHeader String accessToken, @RequestBody final SearchPhrasesByTagReq req) {
+        log.info("START endpoint searchPhrasesByTag, accessToken: {}, request: {}", accessToken, req);
+        ResponseEntity<Response> resp = searchService.searchPhrasesByTag(req, accessToken);
+        log.info("END endpoint searchPhrasesByTag, response: {}", resp);
+        return resp;
+    }
+
+    @PostMapping("/searchTags")
+    public ResponseEntity<Response> searchTags (@RequestHeader String accessToken, @RequestBody final SearchTagReq req) {
+        log.info("START endpoint searchTags, accessToken: {}, request: {}", accessToken, req);
+        ResponseEntity<Response> resp = searchService.searchTags(req, accessToken);
+        log.info("END endpoint searchTags, response: {}", resp);
+        return resp;
+    }
 
 }

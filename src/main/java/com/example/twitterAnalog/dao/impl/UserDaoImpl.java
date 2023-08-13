@@ -62,16 +62,6 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
          }
     }
 
-    @Override
-    public long getUserIdByToken(String accessToken) {
-        try{
-            return jdbcTemplate.queryForObject("SELECT id FROM user WHERE access_token = ?;", Long.class, accessToken);
-        } catch(EmptyResultDataAccessException ex) {
-            log.error(ex.toString());
-            throw CommonException.builder().code(Code.AUTHORIZATION_ERROR).message("Ошибка авторизации")
-                    .httpStatus(HttpStatus.BAD_REQUEST).build();
-        }
-    }
 
     @Override
     public void addTag(String tag) {
@@ -98,9 +88,4 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
                 new PhraseRowMapper(), userId);
     }
 
-    @Override
-    public List<String> getTagsByPhraseId(long phraseId) {
-        return jdbcTemplate.queryForList("SELECT text FROM tag WHERE id IN (SELECT tag_id FROM phrase_tag WHERE phrase_id=?);",
-                String.class, phraseId);
-    }
 }

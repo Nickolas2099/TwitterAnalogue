@@ -1,8 +1,8 @@
 package com.example.twitterAnalog.service;
 
-import com.example.twitterAnalog.domain.api.LoginReq;
-import com.example.twitterAnalog.domain.api.PublicPhraseReq;
-import com.example.twitterAnalog.domain.api.RegistrationReq;
+import com.example.twitterAnalog.domain.api.user.LoginReq;
+import com.example.twitterAnalog.domain.api.user.PublicPhraseReq;
+import com.example.twitterAnalog.domain.api.user.RegistrationReq;
 import com.example.twitterAnalog.domain.response.Response;
 import org.springframework.http.ResponseEntity;
 

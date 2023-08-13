@@ -1,4 +1,4 @@
-package com.example.twitterAnalog.domain.api;
+package com.example.twitterAnalog.domain.api.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

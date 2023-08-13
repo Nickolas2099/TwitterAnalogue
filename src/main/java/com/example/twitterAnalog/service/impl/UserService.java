@@ -1,7 +1,9 @@
 package com.example.twitterAnalog.service.impl;
 
+import com.example.twitterAnalog.dao.CommonDao;
 import com.example.twitterAnalog.dao.UserDao;
-import com.example.twitterAnalog.domain.api.*;
+import com.example.twitterAnalog.domain.api.common.PhraseResp;
+import com.example.twitterAnalog.domain.api.user.*;
 import com.example.twitterAnalog.domain.constant.Code;
 import com.example.twitterAnalog.domain.dto.User;
 import com.example.twitterAnalog.domain.entity.Phrase;
@@ -30,6 +32,7 @@ public class UserService implements PhraseService {
 
     private final ValidationUtils validationUtils;
     private final UserDao userDao;
+    private final CommonDao commonDao;
     private final EncryptUtils encryptUtils;
 
     @Override
@@ -64,7 +67,7 @@ public class UserService implements PhraseService {
     public ResponseEntity<Response> publicPhrase(@RequestHeader PublicPhraseReq req, @RequestBody String accessToken) {
         validationUtils.validationRequest(req);
 
-        long userId = userDao.getUserIdByToken(accessToken);
+        long userId = commonDao.getUserIdByToken(accessToken);
         long phraseId = userDao.addPhrase(userId, req.getText());
         log.info("userId: {}, phraseId: {}", userId, phraseId);
 
@@ -78,12 +81,12 @@ public class UserService implements PhraseService {
 
     @Override
     public ResponseEntity<Response> getPhrases(String accessToken) {
-        long userId = userDao.getUserIdByToken(accessToken);
+        long userId = commonDao.getUserIdByToken(accessToken);
         List<Phrase> phraseList = userDao.getPhrasesByUserId(userId);
 
         List<PhraseResp> phraseRespList = new ArrayList<>();
         for (Phrase phrase : phraseList) {
-            List<String> tags = userDao.getTagsByPhraseId(phrase.getId());
+            List<String> tags = commonDao.getTagsByPhraseId(phrase.getId());
             phraseRespList.add(PhraseResp.builder()
                     .id(phrase.getId())
                     .text(phrase.getText())

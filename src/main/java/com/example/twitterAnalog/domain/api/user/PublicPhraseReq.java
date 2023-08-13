@@ -1,4 +1,4 @@
-package com.example.twitterAnalog.domain.api;
+package com.example.twitterAnalog.domain.api.user;
 
 import com.example.twitterAnalog.domain.constant.RegExp;
 import jakarta.validation.constraints.NotBlank;

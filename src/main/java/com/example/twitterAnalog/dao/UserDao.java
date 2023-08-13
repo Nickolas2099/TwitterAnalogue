@@ -12,10 +12,8 @@ public interface UserDao {
     boolean isExistsNickname(String nickname);
     void insertNewUser(User user);
     String getAccessToken(User user);
-    long getUserIdByToken(String accessToken);
     void addTag(String tag);
     void addPhraseTag(long phraseId, String tag);
     long addPhrase(long userId, String text);
     List<Phrase> getPhrasesByUserId(long userId);
-    List<String> getTagsByPhraseId(long phraseId);
 }

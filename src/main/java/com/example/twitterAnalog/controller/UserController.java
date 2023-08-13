@@ -1,8 +1,8 @@
 package com.example.twitterAnalog.controller;
 
-import com.example.twitterAnalog.domain.api.LoginReq;
-import com.example.twitterAnalog.domain.api.PublicPhraseReq;
-import com.example.twitterAnalog.domain.api.RegistrationReq;
+import com.example.twitterAnalog.domain.api.user.LoginReq;
+import com.example.twitterAnalog.domain.api.user.PublicPhraseReq;
+import com.example.twitterAnalog.domain.api.user.RegistrationReq;
 import com.example.twitterAnalog.domain.response.Response;
 import com.example.twitterAnalog.service.impl.UserService;
 import lombok.RequiredArgsConstructor;

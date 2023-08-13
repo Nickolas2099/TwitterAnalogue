@@ -1,20 +1,16 @@
-package com.example.twitterAnalog.domain.api;
+package com.example.twitterAnalog.domain.api.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-@Builder
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PhraseResp {
+public class TagResp {
 
     private long id;
     private String text;
-    private String timeInsert;
-    private List<String> tags;
 }

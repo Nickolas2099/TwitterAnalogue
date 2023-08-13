@@ -1,5 +1,6 @@
-package com.example.twitterAnalog.domain.api;
+package com.example.twitterAnalog.domain.api.search;
 
+import com.example.twitterAnalog.domain.api.common.TagResp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +12,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetMyPhrasesResp {
-    private List<PhraseResp> phrases;
+public class SearchTagResp {
+
+    private List<TagResp> tags;
 }
