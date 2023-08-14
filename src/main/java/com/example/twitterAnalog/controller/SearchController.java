@@ -1,5 +1,6 @@
 package com.example.twitterAnalog.controller;
 
+import com.example.twitterAnalog.domain.api.search.SearchPhrasesByPartWordReq;
 import com.example.twitterAnalog.domain.api.search.SearchPhrasesByTagReq;
 import com.example.twitterAnalog.domain.api.search.SearchTagReq;
 import com.example.twitterAnalog.domain.response.Response;
@@ -16,6 +17,15 @@ import org.springframework.web.bind.annotation.*;
 public class SearchController {
 
     private final SearchService searchService;
+
+    @PostMapping("/searchPhrasesByPartWord")
+    public ResponseEntity<Response> searchPhrasesByPartWord(@RequestHeader String accessToken, @RequestBody final SearchPhrasesByPartWordReq req) {
+        log.info("START endpoint searchPhrasesByPartWord, accessToken: {}, request: {}", accessToken, req);
+        ResponseEntity<Response> resp = searchService.searchPhrasesByPartWord(req, accessToken);
+        log.info("END endpoint searchPhrasesByPartWord, response: {}", resp);
+        return resp;
+    }
+
 
     @PostMapping("/searchPhrasesByTag")
     public ResponseEntity<Response> searchPhrasesbyTag(@RequestHeader String accessToken, @RequestBody final SearchPhrasesByTagReq req) {

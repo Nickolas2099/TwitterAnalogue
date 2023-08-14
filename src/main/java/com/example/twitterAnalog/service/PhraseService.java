@@ -12,5 +12,5 @@ public interface PhraseService {
     ResponseEntity<Response> registration(RegistrationReq req);
     ResponseEntity<Response> login(LoginReq req);
     ResponseEntity<Response> publicPhrase(PublicPhraseReq req, String accessToken);
-    ResponseEntity<Response> getPhrases(String accessToken);
+    ResponseEntity<Response> getMyPhrases(String accessToken);
 }

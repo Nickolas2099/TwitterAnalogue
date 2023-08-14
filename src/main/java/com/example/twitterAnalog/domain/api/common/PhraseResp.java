@@ -1,6 +1,5 @@
 package com.example.twitterAnalog.domain.api.common;
 
-import com.example.twitterAnalog.domain.api.common.TagResp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,8 +14,8 @@ import java.util.List;
 public class PhraseResp {
 
     private long phraseId;
-    private long userId;
-    private String nickname;
+    //private long userId;
+    //private String nickname;
     private String text;
     private String timeInsert;
     private List<TagResp> tags;

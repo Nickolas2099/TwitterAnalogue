@@ -2,10 +2,7 @@ package com.example.twitterAnalog.service.impl;
 
 import com.example.twitterAnalog.dao.CommonDao;
 import com.example.twitterAnalog.dao.SearchDao;
-import com.example.twitterAnalog.domain.api.search.SearchPhrasesByTagReq;
-import com.example.twitterAnalog.domain.api.search.SearchPhrasesByTagResp;
-import com.example.twitterAnalog.domain.api.search.SearchTagReq;
-import com.example.twitterAnalog.domain.api.search.SearchTagResp;
+import com.example.twitterAnalog.domain.api.search.*;
 import com.example.twitterAnalog.domain.api.common.TagResp;
 import com.example.twitterAnalog.domain.api.common.PhraseResp;
 import com.example.twitterAnalog.domain.response.Response;
@@ -41,6 +38,20 @@ public class SearchServiceImpl implements SearchService {
         }
         return new ResponseEntity<>(SuccessResponse.builder().data(SearchPhrasesByTagResp.builder()
                 .phrases(phrases).build()).build(), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Response> searchPhrasesByPartWord(SearchPhrasesByPartWordReq req, String accessToken) {
+        validation.validationRequest(req);
+        commonDao.getUserIdByToken(accessToken);
+
+        List<PhraseResp> phrases = searchDao.searchPhrasesByPartWord(req);
+        for (PhraseResp phraseResp : phrases) {
+            List<TagResp> tags = commonDao.getTagsByPhraseId(phraseResp.getPhraseId());
+            phraseResp.setTags(tags);
+        }
+        return new ResponseEntity<>(SuccessResponse.builder().data(SearchPhrasesByTagResp.builder().phrases(phrases)
+                .build()).build(), HttpStatus.OK);
     }
 
     @Override

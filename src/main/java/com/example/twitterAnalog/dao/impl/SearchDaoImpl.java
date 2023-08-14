@@ -4,6 +4,7 @@ import com.example.twitterAnalog.dao.SearchDao;
 import com.example.twitterAnalog.domain.api.common.PhraseRespRowMapper;
 import com.example.twitterAnalog.domain.api.common.TagResp;
 import com.example.twitterAnalog.domain.api.common.TagRespRowMapper;
+import com.example.twitterAnalog.domain.api.search.SearchPhrasesByPartWordReq;
 import com.example.twitterAnalog.domain.api.search.SearchPhrasesByTagReq;
 import com.example.twitterAnalog.domain.api.common.PhraseResp;
 import jakarta.annotation.PostConstruct;
@@ -40,6 +41,15 @@ public class SearchDaoImpl extends JdbcDaoSupport implements SearchDao {
                 "   JOIN user u on phrase.user_id = u.id " +
                 "WHERE phrase.id IN (SELECT phrase_id FROM phrase_tag WHERE tag_id = ?) " +
                 "ORDER BY " + req.getSort().getValue() + ";", new PhraseRespRowMapper(), req.getTagId());
+    }
+
+    @Override
+    public List<PhraseResp> searchPhrasesByPartWord(SearchPhrasesByPartWordReq req) {
+        return jdbcTemplate.query("SELECT phrase.id AS phrase_id, u.id AS user_id, u.nickname, phrase.text, phrase.time_insert " +
+                "FROM phrase " +
+                "   JOIN user u on phrase.user_id = u.id " +
+                "WHERE phrase.text LIKE CONCAT('%', ?, '%') " +
+                "ORDER BY " + req.getSort().getValue(), new PhraseRespRowMapper(), req.getPartWord());
     }
 
     @Override

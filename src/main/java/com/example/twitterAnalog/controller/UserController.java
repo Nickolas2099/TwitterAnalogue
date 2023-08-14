@@ -4,7 +4,7 @@ import com.example.twitterAnalog.domain.api.user.LoginReq;
 import com.example.twitterAnalog.domain.api.user.PublicPhraseReq;
 import com.example.twitterAnalog.domain.api.user.RegistrationReq;
 import com.example.twitterAnalog.domain.response.Response;
-import com.example.twitterAnalog.service.impl.UserService;
+import com.example.twitterAnalog.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "phrase-service-public/user")
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
     @GetMapping("/hello")
     public String hello() {
@@ -28,7 +28,7 @@ public class UserController {
     @PostMapping("/registration")
     public ResponseEntity<Response> registration(@RequestBody final RegistrationReq req) {
         log.info("START endpoint registration, request: {}", req);
-        ResponseEntity<Response> resp = userService.registration(req);
+        ResponseEntity<Response> resp = userServiceImpl.registration(req);
         log.info("End endpoint registration, response: {}", resp);
         return resp;
     }
@@ -36,7 +36,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<Response> login(@RequestBody final LoginReq req) {
         log.info("START endpoint login, request: {}", req);
-        ResponseEntity<Response> resp = userService.login(req);
+        ResponseEntity<Response> resp = userServiceImpl.login(req);
         log.info("End endpoint login, response: {}", resp);
         return resp;
     }
@@ -45,7 +45,7 @@ public class UserController {
     public ResponseEntity<Response> publicPhrase(@RequestHeader final String accessToken, @RequestBody final PublicPhraseReq req) {
 
         log.info("START endpoint publicPhrase, request: {}", req);
-        ResponseEntity<Response> resp = userService.publicPhrase(req, accessToken);
+        ResponseEntity<Response> resp = userServiceImpl.publicPhrase(req, accessToken);
         log.info("End endpoint publicPhrase, response: {}", resp);
         return resp;
     }
@@ -54,7 +54,7 @@ public class UserController {
     public ResponseEntity<Response> getPhrases(@RequestHeader final String accessToken){
 
         log.info("START endpoint getPhrases, accessToken: {}", accessToken);
-        ResponseEntity<Response> resp = userService.getPhrases(accessToken);
+        ResponseEntity<Response> resp = userServiceImpl.getMyPhrases(accessToken);
         log.info("END endpoint getPhrases, accessToken: {}", accessToken);
         return resp;
     }
