@@ -1,5 +1,6 @@
 package com.example.twitterAnalog.controller;
 
+import com.example.twitterAnalog.domain.api.search.SearchUsersByPartNicknameReq;
 import com.example.twitterAnalog.domain.api.search.SearchPhrasesByPartWordReq;
 import com.example.twitterAnalog.domain.api.search.SearchPhrasesByTagReq;
 import com.example.twitterAnalog.domain.api.search.SearchTagReq;
@@ -43,4 +44,12 @@ public class SearchController {
         return resp;
     }
 
+    @PostMapping("/searchUsersByPartNickname")
+    public ResponseEntity<Response> searchUsersByPartNickname(@RequestHeader String accessToken,
+                                                              @RequestBody final SearchUsersByPartNicknameReq req) {
+        log.info("START endpoint searchUsersByPartNickname, accessToken: {}, request: {}", accessToken, req);
+        ResponseEntity<Response> resp = searchService.searchUsersByPartNickname(req, accessToken);
+        log.info("END endpoint searchUsersByPartNickname, response: {}", resp);
+        return resp;
+    }
 }

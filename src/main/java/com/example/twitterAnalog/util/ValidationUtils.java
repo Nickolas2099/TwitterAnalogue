@@ -25,7 +25,7 @@ public class ValidationUtils {
                     .map(ConstraintViolation::getMessage)
                     .reduce((s1, s2) -> s1 + ". " + s2).orElse("");
             log.error("Переданный в запросе json не валиден, ошибка валидации: {}", resultValidations);
-            throw CommonException.builder().code(Code.REQUEST_VALIDATION_ERROR).message(resultValidations)
+            throw CommonException.builder().code(Code.REQUEST_VALIDATION_ERROR).userMessage(resultValidations)
                     .httpStatus(HttpStatus.BAD_REQUEST).build();
         }
     }

@@ -17,7 +17,7 @@ public class PhraseServiceErrorHandler {
     @ExceptionHandler(CommonException.class)
     public ResponseEntity<ErrorResponse> handleCommonException(CommonException ex) {
         log.error("common error: {}", ex.toString());
-        return new ResponseEntity<>(ErrorResponse.builder().error(Error.builder().code(ex.getCode()).techMessage(ex.getMessage())
+        return new ResponseEntity<>(ErrorResponse.builder().error(Error.builder().code(ex.getCode()).techMessage(ex.getUserMessage())
                 .build()).build(), ex.getHttpStatus());
     }
 

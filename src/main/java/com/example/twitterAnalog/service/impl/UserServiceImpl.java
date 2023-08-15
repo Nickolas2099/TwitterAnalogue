@@ -59,7 +59,7 @@ public class UserServiceImpl implements PhraseService {
         validationUtils.validationRequest(req);
 
         if(userDao.isExistsNickname(req.getAuthorization().getNickname())) {
-            throw CommonException.builder().code(Code.NICKNAME_BUSY).message("Этот ник уже занят, придумайте другой")
+            throw CommonException.builder().code(Code.NICKNAME_BUSY).userMessage("Этот ник уже занят, придумайте другой")
                     .httpStatus(HttpStatus.BAD_REQUEST).build();
         }
 

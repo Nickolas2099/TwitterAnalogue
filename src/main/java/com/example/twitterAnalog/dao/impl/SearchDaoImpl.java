@@ -1,12 +1,9 @@
 package com.example.twitterAnalog.dao.impl;
 
 import com.example.twitterAnalog.dao.SearchDao;
-import com.example.twitterAnalog.domain.api.common.PhraseRespRowMapper;
-import com.example.twitterAnalog.domain.api.common.TagResp;
-import com.example.twitterAnalog.domain.api.common.TagRespRowMapper;
+import com.example.twitterAnalog.domain.api.common.*;
 import com.example.twitterAnalog.domain.api.search.SearchPhrasesByPartWordReq;
 import com.example.twitterAnalog.domain.api.search.SearchPhrasesByTagReq;
-import com.example.twitterAnalog.domain.api.common.PhraseResp;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +47,22 @@ public class SearchDaoImpl extends JdbcDaoSupport implements SearchDao {
                 "   JOIN user u on phrase.user_id = u.id " +
                 "WHERE phrase.text LIKE CONCAT('%', ?, '%') " +
                 "ORDER BY " + req.getSort().getValue(), new PhraseRespRowMapper(), req.getPartWord());
+    }
+
+    @Override
+    public List<UserResp> searchUsersByPartNickname(String partNickname) {
+        return jdbcTemplate.query("SELECT id, nickname " +
+                "FROM (" +
+                "   SELECT id, nickname " +
+                "   FROM user " +
+                "   WHERE nickname LIKE CONCAT(?, '%')) t1 " +
+                "UNION " +
+                "SELECT id, nickname " +
+                "FROM (" +
+                "   SELECT id, nickname " +
+                "   FROM user " +
+                "   WHERE nickname LIKE CONCAT('%', ?, '%')) t2;",
+        new UserRespRowMapper(), partNickname, partNickname);
     }
 
     @Override

@@ -55,6 +55,15 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
+    public ResponseEntity<Response> searchUsersByPartNickname(SearchUsersByPartNicknameReq req, String accessToken) {
+        validation.validationRequest(req);
+        commonDao.getUserIdByToken(accessToken);
+
+        return new ResponseEntity<>(SuccessResponse.builder().data(searchDao.searchUsersByPartNickname(req.getPartNickname()))
+                .build(), HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity<Response> searchTags(SearchTagReq req, String accessToken) {
 
         validation.validationRequest(req);
@@ -64,4 +73,6 @@ public class SearchServiceImpl implements SearchService {
         return new ResponseEntity<>(SuccessResponse.builder().data(SearchTagResp.builder().tags(tagRespList).build())
                 .build(), HttpStatus.OK);
     }
+
+
 }

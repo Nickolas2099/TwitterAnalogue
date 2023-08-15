@@ -57,7 +57,7 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
 
          } catch(EmptyResultDataAccessException ex) {
              log.error(ex.toString());
-             throw CommonException.builder().code(Code.USER_NOT_FOUND).message("Пользователь не найден")
+             throw CommonException.builder().code(Code.USER_NOT_FOUND).userMessage("Пользователь не найден")
                      .httpStatus(HttpStatus.BAD_REQUEST).build();
          }
     }

@@ -45,7 +45,7 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao {
             return jdbcTemplate.queryForObject("SELECT id FROM user WHERE access_token = ?;", Long.class, accessToken);
         } catch(EmptyResultDataAccessException ex) {
             log.error(ex.toString());
-            throw CommonException.builder().code(Code.AUTHORIZATION_ERROR).message("Ошибка авторизации")
+            throw CommonException.builder().code(Code.AUTHORIZATION_ERROR).userMessage("Ошибка авторизации")
                     .httpStatus(HttpStatus.BAD_REQUEST).build();
         }
     }
