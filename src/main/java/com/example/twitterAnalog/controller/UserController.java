@@ -4,7 +4,7 @@ import com.example.twitterAnalog.domain.api.user.LoginReq;
 import com.example.twitterAnalog.domain.api.user.PublicPhraseReq;
 import com.example.twitterAnalog.domain.api.user.RegistrationReq;
 import com.example.twitterAnalog.domain.response.Response;
-import com.example.twitterAnalog.service.impl.UserServiceImpl;
+import com.example.twitterAnalog.service.user.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

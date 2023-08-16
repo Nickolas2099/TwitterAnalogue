@@ -1,6 +1,6 @@
-package com.example.twitterAnalog.dao.impl;
+package com.example.twitterAnalog.dao.search;
 
-import com.example.twitterAnalog.dao.SearchDao;
+import com.example.twitterAnalog.dao.search.SearchDao;
 import com.example.twitterAnalog.domain.api.common.*;
 import com.example.twitterAnalog.domain.api.search.SearchPhrasesByPartWordReq;
 import com.example.twitterAnalog.domain.api.search.SearchPhrasesByTagReq;

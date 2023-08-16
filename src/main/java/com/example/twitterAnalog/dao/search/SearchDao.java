@@ -1,4 +1,4 @@
-package com.example.twitterAnalog.dao;
+package com.example.twitterAnalog.dao.search;
 
 import com.example.twitterAnalog.domain.api.common.PhraseResp;
 import com.example.twitterAnalog.domain.api.common.TagResp;

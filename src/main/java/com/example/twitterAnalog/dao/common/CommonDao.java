@@ -1,4 +1,4 @@
-package com.example.twitterAnalog.dao;
+package com.example.twitterAnalog.dao.common;
 
 import com.example.twitterAnalog.domain.api.common.TagResp;
 import org.springframework.stereotype.Component;

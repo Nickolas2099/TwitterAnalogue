@@ -1,4 +1,4 @@
-package com.example.twitterAnalog.dao;
+package com.example.twitterAnalog.dao.user;
 
 import com.example.twitterAnalog.domain.dto.User;
 import com.example.twitterAnalog.domain.entity.Phrase;

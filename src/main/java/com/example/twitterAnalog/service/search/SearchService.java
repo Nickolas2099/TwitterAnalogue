@@ -1,4 +1,4 @@
-package com.example.twitterAnalog.service;
+package com.example.twitterAnalog.service.search;
 
 
 import com.example.twitterAnalog.domain.api.search.SearchUsersByPartNicknameReq;

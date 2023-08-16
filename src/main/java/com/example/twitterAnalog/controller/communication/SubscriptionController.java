@@ -1,8 +1,10 @@
 package com.example.twitterAnalog.controller.communication;
 
 
+import com.example.twitterAnalog.domain.api.communication.subscribe.SubscriptionReq;
+import com.example.twitterAnalog.domain.api.communication.subscribe.UnsubscriptionReq;
 import com.example.twitterAnalog.domain.response.Response;
-import com.example.twitterAnalog.service.SubscriptionService;
+import com.example.twitterAnalog.service.communication.SubscriptionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +36,7 @@ public class SubscriptionController {
 
     @GetMapping("/subscription")
     public ResponseEntity<Response> subscription(@RequestHeader String accessToken, @RequestBody SubscriptionReq req) {
-        log.info("START endpoint subscription, accessToken: {}, SubsciptionReq", accessToken, req);
+        log.info("START endpoint subscription, accessToken: {}, SubscriptionReq: {}", accessToken, req);
         ResponseEntity<Response> resp = subscriptionService.subscription(req, accessToken);
         log.info("END endpoint subscription, resp: {}", resp);
         return resp;

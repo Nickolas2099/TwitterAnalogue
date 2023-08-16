@@ -1,8 +1,8 @@
-package com.example.twitterAnalog.service.impl;
+package com.example.twitterAnalog.service.user;
 
 import com.example.twitterAnalog.config.MapperConfig;
-import com.example.twitterAnalog.dao.CommonDao;
-import com.example.twitterAnalog.dao.UserDao;
+import com.example.twitterAnalog.dao.common.CommonDao;
+import com.example.twitterAnalog.dao.user.UserDao;
 import com.example.twitterAnalog.domain.api.common.PhraseResp;
 import com.example.twitterAnalog.domain.api.common.TagResp;
 import com.example.twitterAnalog.domain.api.user.*;
@@ -12,7 +12,6 @@ import com.example.twitterAnalog.domain.entity.Phrase;
 import com.example.twitterAnalog.domain.response.SuccessResponse;
 import com.example.twitterAnalog.domain.response.Response;
 import com.example.twitterAnalog.domain.response.exception.CommonException;
-import com.example.twitterAnalog.service.PhraseService;
 import com.example.twitterAnalog.util.EncryptUtils;
 import com.example.twitterAnalog.util.ValidationUtils;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +29,7 @@ import java.util.UUID;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class UserServiceImpl implements PhraseService {
+public class UserServiceImpl implements UserService {
 
     private final ValidationUtils validationUtils;
     private final UserDao userDao;

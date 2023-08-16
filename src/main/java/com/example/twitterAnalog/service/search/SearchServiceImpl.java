@@ -1,13 +1,12 @@
-package com.example.twitterAnalog.service.impl;
+package com.example.twitterAnalog.service.search;
 
-import com.example.twitterAnalog.dao.CommonDao;
-import com.example.twitterAnalog.dao.SearchDao;
+import com.example.twitterAnalog.dao.common.CommonDao;
+import com.example.twitterAnalog.dao.search.SearchDao;
 import com.example.twitterAnalog.domain.api.search.*;
 import com.example.twitterAnalog.domain.api.common.TagResp;
 import com.example.twitterAnalog.domain.api.common.PhraseResp;
 import com.example.twitterAnalog.domain.response.Response;
 import com.example.twitterAnalog.domain.response.SuccessResponse;
-import com.example.twitterAnalog.service.SearchService;
 import com.example.twitterAnalog.util.ValidationUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

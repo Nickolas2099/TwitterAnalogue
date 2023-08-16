@@ -1,6 +1,6 @@
-package com.example.twitterAnalog.dao.impl;
+package com.example.twitterAnalog.dao.user;
 
-import com.example.twitterAnalog.dao.UserDao;
+import com.example.twitterAnalog.dao.user.UserDao;
 import com.example.twitterAnalog.domain.constant.Code;
 import com.example.twitterAnalog.domain.dto.User;
 import com.example.twitterAnalog.domain.entity.Phrase;

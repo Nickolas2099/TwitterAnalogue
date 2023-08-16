@@ -1,6 +1,6 @@
-package com.example.twitterAnalog.dao.impl;
+package com.example.twitterAnalog.dao.common;
 
-import com.example.twitterAnalog.dao.CommonDao;
+import com.example.twitterAnalog.dao.common.CommonDao;
 import com.example.twitterAnalog.domain.api.common.TagResp;
 import com.example.twitterAnalog.domain.api.common.TagRespRowMapper;
 import com.example.twitterAnalog.domain.constant.Code;

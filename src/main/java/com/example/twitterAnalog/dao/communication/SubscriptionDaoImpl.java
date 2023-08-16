@@ -1,4 +1,4 @@
-package com.example.twitterAnalog.dao.impl.communication;
+package com.example.twitterAnalog.dao.communication;
 
 import com.example.twitterAnalog.dao.communication.SubscriptionDao;
 import com.example.twitterAnalog.domain.api.common.UserResp;
@@ -9,7 +9,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.DuplicateKeyException
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;

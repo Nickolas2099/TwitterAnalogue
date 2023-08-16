@@ -5,7 +5,7 @@ import com.example.twitterAnalog.domain.api.search.SearchPhrasesByPartWordReq;
 import com.example.twitterAnalog.domain.api.search.SearchPhrasesByTagReq;
 import com.example.twitterAnalog.domain.api.search.SearchTagReq;
 import com.example.twitterAnalog.domain.response.Response;
-import com.example.twitterAnalog.service.SearchService;
+import com.example.twitterAnalog.service.search.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
