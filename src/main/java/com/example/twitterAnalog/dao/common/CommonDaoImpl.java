@@ -50,5 +50,10 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao {
         }
     }
 
+    @Override
+    public void testSchedulerLock(String instanceName) {
+        jdbcTemplate.update("INSERT INTO schedlock(name) VALUES (?);", instanceName);
+    }
+
 
 }
