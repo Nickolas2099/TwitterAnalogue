@@ -18,6 +18,15 @@ public class SubscriptionController {
 
     private final SubscriptionService subscriptionService;
 
+    @GetMapping("getMyPublishersPhrases/{from}/{limit}")
+    public ResponseEntity<Response> getMyPublishersPhrases(@RequestHeader String accessToken,
+                                                           @PathVariable("from") int from, @PathVariable("limit") int limit) {
+        log.info("START endpoint getMyPublishersPhrases, accessToken: {}, from: {}, limit: {}", accessToken, from, limit);
+        ResponseEntity<Response> resp = subscriptionService.getMyPublishersPhrases(accessToken, from, limit);
+        log.info("END endpoint getMyPublishersPhrases, resp: {}", resp);
+        return resp;
+    }
+
     @GetMapping("/getMySubscribers")
     public ResponseEntity<Response> getMySubscribers(@RequestHeader String accessToken) {
         log.info("START endpoint getMySubscribers, accessToken: {}", accessToken);

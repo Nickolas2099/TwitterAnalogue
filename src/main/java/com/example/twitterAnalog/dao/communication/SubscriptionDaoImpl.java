@@ -1,6 +1,8 @@
 package com.example.twitterAnalog.dao.communication;
 
 import com.example.twitterAnalog.dao.communication.SubscriptionDao;
+import com.example.twitterAnalog.domain.api.common.PhraseResp;
+import com.example.twitterAnalog.domain.api.common.PhraseRespRowMapper;
 import com.example.twitterAnalog.domain.api.common.UserResp;
 import com.example.twitterAnalog.domain.api.common.UserRespRowMapper;
 import com.example.twitterAnalog.domain.constant.Code;
@@ -52,6 +54,21 @@ public class SubscriptionDaoImpl extends JdbcDaoSupport implements SubscriptionD
     public void unsubscription(long subuserId, long pubUserId) {
         jdbcTemplate.update("DELETE FROM subscription WHERE sub_user_id = ? AND pub_user_id = ?;",
                 subuserId, pubUserId);
+    }
+
+    @Override
+    public List<PhraseResp> getMyPublishersPhrases(long userId, int from, int limit) {
+        return jdbcTemplate.query(
+                "SELECT phrase.id AS phrase_id, phrase.text AS phrase_text, phrase.time_insert, phrase.user_id, u.nickname AS nickname " +
+                        "FROM phrase " +
+                        "   JOIN user u on u.id = phrase.user_id " +
+                        "WHERE user_id IN (" +
+                        "   SELECT pub_user_id " +
+                        "   FROM subscription " +
+                        "   WHERE sub_user_id = 9) " +
+                        "ORDER BY phrase.time_insert DESC " +
+                        "LIMIT ?,?;",
+                new PhraseRespRowMapper(), userId, from, limit);
     }
 
     @Override

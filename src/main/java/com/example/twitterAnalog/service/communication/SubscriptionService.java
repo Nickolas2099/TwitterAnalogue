@@ -14,6 +14,6 @@ public interface SubscriptionService {
     ResponseEntity<Response> getMyPublishers(String accessToken);
     ResponseEntity<Response> unsubscription(UnsubscriptionReq req, String accessToken);
     ResponseEntity<Response> subscription(SubscriptionReq req, String accessToken);
-
+    ResponseEntity<Response> getMyPublishersPhrases(String accessToken, int from, int limit);
 
 }

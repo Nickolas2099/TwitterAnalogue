@@ -2,6 +2,10 @@ package com.example.twitterAnalog.service.communication;
 
 import com.example.twitterAnalog.dao.common.CommonDao;
 import com.example.twitterAnalog.dao.communication.SubscriptionDao;
+import com.example.twitterAnalog.domain.api.common.CommonPhrasesResp;
+import com.example.twitterAnalog.domain.api.common.PhraseResp;
+import com.example.twitterAnalog.domain.api.common.TagResp;
+import com.example.twitterAnalog.domain.api.communication.GetMyPublishersPhrasesResp;
 import com.example.twitterAnalog.domain.api.communication.subscribe.GetMyPublishersResp;
 import com.example.twitterAnalog.domain.api.communication.subscribe.SubscriptionReq;
 import com.example.twitterAnalog.domain.api.communication.subscribe.UnsubscriptionReq;
@@ -31,20 +35,26 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     private final CommonService commonService;
 
 
-//    @Override
-//    public ResponseEntity<Response> getMyPublishersPhrases(String accessToken, int from, int limit) {
-//        validationUtils.validationDecimalMin("from", from, 0);
-//        validationUtils.validationDecimalMin("limit", limit, 1);
-//
-//        long userId = commonDao.getUserIdByToken(accessToken);
-//        log.info("userId: {}", userId);
-//
-//        List<PhraseResp> phrases = subscriptionDao.getMyPublishers(userId, from, limit);
+    @Override
+    public ResponseEntity<Response> getMyPublishersPhrases(String accessToken, int from, int limit) {
+        validationUtils.validationDecimalMin("from", from, 0);
+        validationUtils.validationDecimalMin("limit", limit, 1);
+
+        long userId = commonDao.getUserIdByToken(accessToken);
+        log.info("userId: {}", userId);
+
+        List<PhraseResp> phrases = subscriptionDao.getMyPublishersPhrases(userId, from, limit);
 //        commonService.phraseEnrichment(phrases);
-//
+        for(PhraseResp phraseResp : phrases) {
+            List<TagResp> tags = commonDao.getTagsByPhraseId(phraseResp.getPhraseId());
+            phraseResp.setTags(tags);
+        }
+
+        return new ResponseEntity<>(SuccessResponse.builder().data(
+                GetMyPublishersPhrasesResp.builder().phrases(phrases).build()).build(), HttpStatus.OK);
 //        return new ResponseEntity<>(SuccessResponse.builder().data(CommonPhrasesResp.builder().phrases(phrases).build())
 //                .build(), HttpStatus.OK);
-//    }
+    }
 
     @Override
     public ResponseEntity<Response> getMySubscribers(String accessToken) {
