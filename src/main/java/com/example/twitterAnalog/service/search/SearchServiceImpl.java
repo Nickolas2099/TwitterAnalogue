@@ -7,6 +7,7 @@ import com.example.twitterAnalog.domain.api.common.TagResp;
 import com.example.twitterAnalog.domain.api.common.PhraseResp;
 import com.example.twitterAnalog.domain.response.Response;
 import com.example.twitterAnalog.domain.response.SuccessResponse;
+import com.example.twitterAnalog.service.common.CommonService;
 import com.example.twitterAnalog.util.ValidationUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ public class SearchServiceImpl implements SearchService {
     private final SearchDao searchDao;
     private final ValidationUtils validation;
     private final CommonDao commonDao;
+    private final CommonService commonService;
 
     @Override
     public ResponseEntity<Response> searchPhrasesByTag(SearchPhrasesByTagReq req, String accessToken) {
@@ -31,10 +33,7 @@ public class SearchServiceImpl implements SearchService {
 
         commonDao.getUserIdByToken(accessToken);
         List<PhraseResp> phrases = searchDao.searchPhrasesByTag(req);
-        for (PhraseResp phraseResp : phrases) {
-            List<TagResp> tags = commonDao.getTagsByPhraseId(phraseResp.getPhraseId());
-            phraseResp.setTags(tags);
-        }
+        commonService.phraseEnrichment(phrases);
         return new ResponseEntity<>(SuccessResponse.builder().data(SearchPhrasesByTagResp.builder()
                 .phrases(phrases).build()).build(), HttpStatus.OK);
     }
@@ -45,10 +44,7 @@ public class SearchServiceImpl implements SearchService {
         commonDao.getUserIdByToken(accessToken);
 
         List<PhraseResp> phrases = searchDao.searchPhrasesByPartWord(req);
-        for (PhraseResp phraseResp : phrases) {
-            List<TagResp> tags = commonDao.getTagsByPhraseId(phraseResp.getPhraseId());
-            phraseResp.setTags(tags);
-        }
+        commonService.phraseEnrichment(phrases);
         return new ResponseEntity<>(SuccessResponse.builder().data(SearchPhrasesByTagResp.builder().phrases(phrases)
                 .build()).build(), HttpStatus.OK);
     }

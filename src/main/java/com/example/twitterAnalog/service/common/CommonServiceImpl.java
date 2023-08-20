@@ -1,4 +1,4 @@
-package com.example.twitterAnalog.controller.communication.common;
+package com.example.twitterAnalog.service.common;
 
 import com.example.twitterAnalog.dao.common.CommonDao;
 import com.example.twitterAnalog.domain.api.common.PhraseResp;
@@ -19,6 +19,7 @@ public class CommonServiceImpl implements CommonService{
     public void phraseEnrichment(List<PhraseResp> phrases) {
         for (PhraseResp phraseResp : phrases) {
             phraseResp.setTags(commonDao.getTagsByPhraseId(phraseResp.getPhraseId()));
+            phraseResp.setCountLikes(commonDao.getCountLikes(phraseResp.getPhraseId()));
         }
     }
 }

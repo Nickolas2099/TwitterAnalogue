@@ -14,10 +14,11 @@ import java.util.List;
 public class PhraseResp {
 
     private long phraseId;
-    //private long userId;
-    //private String nickname;
+    private long userId;
+    private String nickname;
     private String text;
     private String timeInsert;
     private List<TagResp> tags;
+    private long countLikes;
 
 }

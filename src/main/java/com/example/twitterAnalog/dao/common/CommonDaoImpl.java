@@ -51,6 +51,16 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao {
     }
 
     @Override
+    public long getCountLikes(long phraseId) {
+        try {
+            return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM like_phrase WHERE phrase_id = ?;", Long.class, phraseId);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    @Override
     public void testSchedulerLock(String instanceName) {
         jdbcTemplate.update("INSERT INTO schedlock(name) VALUES (?);", instanceName);
     }

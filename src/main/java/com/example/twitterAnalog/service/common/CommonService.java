@@ -1,4 +1,4 @@
-package com.example.twitterAnalog.controller.communication.common;
+package com.example.twitterAnalog.service.common;
 
 import com.example.twitterAnalog.domain.api.common.PhraseResp;
 

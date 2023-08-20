@@ -2,7 +2,6 @@ package com.example.twitterAnalog.service.communication;
 
 import com.example.twitterAnalog.dao.common.CommonDao;
 import com.example.twitterAnalog.dao.communication.SubscriptionDao;
-import com.example.twitterAnalog.domain.api.common.CommonPhrasesResp;
 import com.example.twitterAnalog.domain.api.common.PhraseResp;
 import com.example.twitterAnalog.domain.api.common.TagResp;
 import com.example.twitterAnalog.domain.api.communication.GetMyPublishersPhrasesResp;
@@ -13,7 +12,7 @@ import com.example.twitterAnalog.domain.constant.Code;
 import com.example.twitterAnalog.domain.response.Response;
 import com.example.twitterAnalog.domain.response.SuccessResponse;
 import com.example.twitterAnalog.domain.response.exception.CommonException;
-import com.example.twitterAnalog.controller.communication.common.CommonService;
+import com.example.twitterAnalog.service.common.CommonService;
 import com.example.twitterAnalog.util.ValidationUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,11 +43,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         log.info("userId: {}", userId);
 
         List<PhraseResp> phrases = subscriptionDao.getMyPublishersPhrases(userId, from, limit);
-//        commonService.phraseEnrichment(phrases);
-        for(PhraseResp phraseResp : phrases) {
-            List<TagResp> tags = commonDao.getTagsByPhraseId(phraseResp.getPhraseId());
-            phraseResp.setTags(tags);
-        }
+        commonService.phraseEnrichment(phrases);
 
         return new ResponseEntity<>(SuccessResponse.builder().data(
                 GetMyPublishersPhrasesResp.builder().phrases(phrases).build()).build(), HttpStatus.OK);
