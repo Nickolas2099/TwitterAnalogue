@@ -2,6 +2,7 @@ package com.example.twitterAnalog.service.communication;
 
 import com.example.twitterAnalog.dao.common.CommonDao;
 import com.example.twitterAnalog.dao.communication.ReactionDao;
+import com.example.twitterAnalog.domain.api.communication.reaction.CommentPhraseReq;
 import com.example.twitterAnalog.domain.response.Response;
 import com.example.twitterAnalog.domain.response.SuccessResponse;
 import com.example.twitterAnalog.util.ValidationUtils;
@@ -33,6 +34,14 @@ public class ReactionServiceImpl implements ReactionService {
         validationUtils.validationDecimalMin("phraseId", phraseId, 1);
         long userId = commonDao.getUserIdByToken(accessToken);
         reactionDao.likePhrase(userId, phraseId);
+        return new ResponseEntity<>(SuccessResponse.builder().build(), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Response> commentPhrase(String accessToken, CommentPhraseReq req) {
+        validationUtils.validationRequest(req);
+        long userId = commonDao.getUserIdByToken(accessToken);
+        reactionDao.commentPhrase(userId, req);
         return new ResponseEntity<>(SuccessResponse.builder().build(), HttpStatus.OK);
     }
 }

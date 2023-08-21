@@ -3,6 +3,8 @@ package com.example.twitterAnalog.dao.common;
 import com.example.twitterAnalog.dao.common.CommonDao;
 import com.example.twitterAnalog.domain.api.common.TagResp;
 import com.example.twitterAnalog.domain.api.common.TagRespRowMapper;
+import com.example.twitterAnalog.domain.api.communication.reaction.CommentResp;
+import com.example.twitterAnalog.domain.api.communication.reaction.CommentRespRowMapper;
 import com.example.twitterAnalog.domain.constant.Code;
 import com.example.twitterAnalog.domain.response.exception.CommonException;
 import jakarta.annotation.PostConstruct;
@@ -63,6 +65,22 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao {
     @Override
     public void testSchedulerLock(String instanceName) {
         jdbcTemplate.update("INSERT INTO schedlock(name) VALUES (?);", instanceName);
+    }
+
+    @Override
+    public List<CommentResp> getCommentsByPhraseId(long phraseId) {
+        try {
+
+            return jdbcTemplate.query("SELECT comment.id AS comment_Id, user_id, nickname, text, " +
+                    "comment.time_insert AS time_insert" +
+                    "FROM comment " +
+                    "   JOIN user u on u.id = comment.user_id " +
+                    "WHERE phrase_id = ? " +
+                    "ORDER BY comment.time_insert DESC;", new CommentRespRowMapper(), phraseId);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
 

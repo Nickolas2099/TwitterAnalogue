@@ -20,6 +20,7 @@ public class CommonServiceImpl implements CommonService{
         for (PhraseResp phraseResp : phrases) {
             phraseResp.setTags(commonDao.getTagsByPhraseId(phraseResp.getPhraseId()));
             phraseResp.setCountLikes(commonDao.getCountLikes(phraseResp.getPhraseId()));
+            phraseResp.setComments(commonDao.getCommentsByPhraseId(phraseResp.getPhraseId()));
         }
     }
 }

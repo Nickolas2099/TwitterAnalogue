@@ -1,5 +1,6 @@
 package com.example.twitterAnalog.domain.api.common;
 
+import com.example.twitterAnalog.domain.api.communication.reaction.CommentResp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,5 +21,6 @@ public class PhraseResp {
     private String timeInsert;
     private List<TagResp> tags;
     private long countLikes;
+    private List<CommentResp> comments;
 
 }

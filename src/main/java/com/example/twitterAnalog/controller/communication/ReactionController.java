@@ -1,5 +1,6 @@
 package com.example.twitterAnalog.controller.communication;
 
+import com.example.twitterAnalog.domain.api.communication.reaction.CommentPhraseReq;
 import com.example.twitterAnalog.domain.response.Response;
 import com.example.twitterAnalog.service.communication.ReactionService;
 import lombok.RequiredArgsConstructor;
@@ -33,4 +34,14 @@ public class ReactionController {
         log.info("END endpoint likePhrase response: {}", resp);
         return resp;
     }
+
+    @GetMapping("/commentPhrase")
+    public ResponseEntity<Response> commentPhrase(@RequestHeader String accessToken, @RequestBody final CommentPhraseReq req) {
+
+        log.info("START endpoint commentPhrase accessToken: {}, req: {}", accessToken, req);
+        ResponseEntity<Response> resp = reactionService.commentPhrase(accessToken, req);
+        log.info("END endpoint commentPhrase resp: {}", resp);
+        return resp;
+    }
+
 }
