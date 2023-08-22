@@ -17,6 +17,15 @@ import org.springframework.web.bind.annotation.*;
 public class ReactionController {
     private final ReactionService reactionService;
 
+    @DeleteMapping("/deleteCommentPhrase/{commentId}")
+    public ResponseEntity<Response> deleteCommentPhrase(@RequestHeader String accessToken,
+                                                        @PathVariable("commentId") long commentId) {
+        log.info("START endpoint deleteCommentPhrase accessToken: {}, commentId: {}", accessToken, commentId);
+        ResponseEntity<Response> resp = reactionService.deleteCommentPhrase(accessToken, commentId);
+        log.info("END endpoint deleteCommentPhrase resp: {}", resp);
+        return resp;
+    }
+
     @GetMapping("/deleteLikePhrase/{phraseId}")
     public ResponseEntity<Response> deleteLikePhrase(@RequestHeader String accessToken, @PathVariable("phraseId") long phraseId) {
 

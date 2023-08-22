@@ -8,5 +8,6 @@ public interface ReactionService {
     ResponseEntity<Response> deleteLikePhrase(String accessToken, long phraseId);
     ResponseEntity<Response> likePhrase(String accessToken, long phraseId);
     ResponseEntity<Response> commentPhrase(String accessToken, CommentPhraseReq req);
+    ResponseEntity<Response> deleteCommentPhrase(String accessToken, long commentId);
 
 }
