@@ -14,4 +14,6 @@ public interface CommonDao {
     long getCountLikes(long phraseId);
     void testSchedulerLock(String instanceName);
     List<CommentResp> getCommentsByPhraseId(long phraseId);
+    boolean isBlocked(long userId, long checkBlockUserId);
+    long getUserIdByPhraseId(long phraseId);
 }

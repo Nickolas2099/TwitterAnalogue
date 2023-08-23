@@ -17,6 +17,33 @@ import org.springframework.web.bind.annotation.*;
 public class ReactionController {
     private final ReactionService reactionService;
 
+//    public ResponseEntity<Response>
+    @PostMapping("/unblockUser/{blockUserId}")
+    public ResponseEntity<Response> unblockUser(@RequestHeader String accessToken, @PathVariable long blockUserId) {
+        log.info("START endpoint unblockUser accessToken: {}, blockUserId: {}", accessToken, blockUserId);
+        ResponseEntity<Response> resp = reactionService.unblockUser(accessToken, blockUserId);
+        log.info("END endpoint unblockUser resp: {}", resp);
+        return resp;
+    }
+
+    @GetMapping("/getBlockUsers")
+    public ResponseEntity<Response> getBlockUsers(@RequestHeader String accessToken) {
+        log.info("START endpoint getBlockUsers accessToken: {}", accessToken);
+        ResponseEntity<Response> resp = reactionService.getBlockUsers(accessToken);
+        log.info("End endpoint getBlockUsers resp: {}", resp);
+        return resp;
+    }
+
+    @PostMapping("/blockUser/{blockUserId}")
+    public ResponseEntity<Response> blockUser(@RequestHeader String accessToken,
+                                              @PathVariable("blockUserId") long blockUserId) {
+        log.info("START endpoint blockUser accessToken: {}, blockUserId: {}", accessToken, blockUserId);
+        ResponseEntity<Response> resp = reactionService.blockUser(accessToken, blockUserId);
+        log.info("End endpoint blockUser resp: {}", resp);
+        return resp;
+    }
+
+
     @DeleteMapping("/deleteCommentPhrase/{commentId}")
     public ResponseEntity<Response> deleteCommentPhrase(@RequestHeader String accessToken,
                                                         @PathVariable("commentId") long commentId) {

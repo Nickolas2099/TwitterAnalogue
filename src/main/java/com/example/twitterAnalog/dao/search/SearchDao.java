@@ -12,7 +12,7 @@ public interface SearchDao {
 
     List<TagResp> searchTags(String partTag);
 
-    List<PhraseResp> searchPhrasesByTag(SearchPhrasesByTagReq req);
+    List<PhraseResp> searchPhrasesByTag(SearchPhrasesByTagReq req, long userId);
     List<PhraseResp> searchPhrasesByPartWord(SearchPhrasesByPartWordReq req);
     List<UserResp> searchUsersByPartNickname(String partNickname);
 }

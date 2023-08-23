@@ -1,5 +1,7 @@
 package com.example.twitterAnalog.dao.communication;
 
+import com.example.twitterAnalog.domain.api.common.UserResp;
+import com.example.twitterAnalog.domain.api.common.UserRespRowMapper;
 import com.example.twitterAnalog.domain.api.communication.reaction.CommentPhraseReq;
 import com.example.twitterAnalog.domain.constant.Code;
 import com.example.twitterAnalog.domain.dto.WhoseComment;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -64,5 +67,22 @@ public class ReactionDaoImpl extends JdbcDaoSupport implements ReactionDao{
     @Override
     public void deleteComment(long commentId) {
         jdbcTemplate.update("DELETE FROM comment WHERE comment_id = ?;", commentId);
+    }
+
+
+    @Override
+    public List<UserResp> getBlockUsers(long userId) {
+        return jdbcTemplate.query("SELECT id, nickname FROM user WHERE id IN " +
+                "(SELECT block_user_id FROM block WHERE user_id=?);", new UserRespRowMapper(), userId);
+    }
+
+    @Override
+    public void blockUser(long userId, long blockUserId) {
+        jdbcTemplate.update("INSERT IGNORE INTO block(user_id, block_user_id) VALUES(?,?);", userId, blockUserId);
+    }
+
+    @Override
+    public void unblockUser(long userId, long blockUserId) {
+        jdbcTemplate.update("DELETE FROM block WHERE user_id=? AND block_user_id=?;", userId, blockUserId);
     }
 }

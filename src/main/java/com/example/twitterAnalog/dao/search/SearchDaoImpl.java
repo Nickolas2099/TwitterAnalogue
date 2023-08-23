@@ -32,20 +32,26 @@ public class SearchDaoImpl extends JdbcDaoSupport implements SearchDao {
     }
 
     @Override
-    public List<PhraseResp> searchPhrasesByTag(SearchPhrasesByTagReq req) {
-        return jdbcTemplate.query("SELECT phrase.id AS phrase_id, u.id AS user_id, u.nickname, phrase.text, phrase.time_insert " +
-                "FROM phrase " +
-                "   JOIN user u on phrase.user_id = u.id " +
-                "WHERE phrase.id IN (SELECT phrase_id FROM phrase_tag WHERE tag_id = ?) " +
-                "ORDER BY " + req.getSort().getValue() + ";", new PhraseRespRowMapper(), req.getTagId());
+    public List<PhraseResp> searchPhrasesByTag(SearchPhrasesByTagReq req, long userId) {
+        return jdbcTemplate.query("SELECT phrase_id, user_id, nickname, text, time_insert " +
+                "FROM ( " +
+                "   SELECT phrase.id AS phrase_id, u.id AS user_id, u.nickname, phrase.text, phrase.time_insert " +
+                "   FROM phrase " +
+                "       JOIN user u on phrase.user_id = u.id " +
+                "   WHERE phrase.id IN (SELECT phrase_id FROM phrase_tag WHERE tag_id = ?)) AS t " +
+                "WHERE user_id IN (SELECT user_id FROM block WHERE blocked_user_id = ?)" +
+                "ORDER BY " + req.getSort().getValue() + ";", new PhraseRespRowMapper(), req.getTagId(), userId);
     }
 
     @Override
     public List<PhraseResp> searchPhrasesByPartWord(SearchPhrasesByPartWordReq req) {
-        return jdbcTemplate.query("SELECT phrase.id AS phrase_id, u.id AS user_id, u.nickname, phrase.text, phrase.time_insert " +
-                "FROM phrase " +
-                "   JOIN user u on phrase.user_id = u.id " +
-                "WHERE phrase.text LIKE CONCAT('%', ?, '%') " +
+        return jdbcTemplate.query("SELECT phrase_id, user_id, nickname, text, time_insert " +
+                "FROM (" +
+                "   SELECT phrase.id AS phrase_id, u.id AS user_id, u.nickname, phrase.text, phrase.time_insert " +
+                "   FROM phrase " +
+                "       JOIN user u on phrase.user_id = u.id " +
+                "   WHERE phrase.text LIKE CONCAT('%', ?, '%')) AS t " +
+                "WHERE user_id NOT IN (SELECT user_id FROM block WHERE blocked_user_id = ?)" +
                 "ORDER BY " + req.getSort().getValue(), new PhraseRespRowMapper(), req.getPartWord());
     }
 
